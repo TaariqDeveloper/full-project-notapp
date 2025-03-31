@@ -21,6 +21,9 @@ import NoteModel from "./NoteModel";
 
 function Home() {
   const [ismodelOpen, setIsmodelOpen] = useState(false);
+  const closeModel = () => {
+    setIsmodelOpen(false);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-400 via-green-500 to-green-600 text-white">
@@ -42,7 +45,7 @@ function Home() {
       >
         +
       </motion.button>
-      {ismodelOpen && <NoteModel />}
+      {ismodelOpen && <NoteModel closeModel={closeModel} />}
     </div>
   );
 }

@@ -35,9 +35,30 @@
 
 // export default NoteModel;
 
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function NoteModel() {
+function NoteModel({ closeModel }) {
+  const [title, setTitel] = useState("");
+  const [Description, setDescription] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:6002/api/note/add", {
+        title,
+        Description,
+      });
+      if (response.data.success) {
+        navigate("/");
+        closeModel();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className=" absolute top-60 ml-[35%] w-[800px]  ">
       <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-3xl h-[600px] text-black">
@@ -48,6 +69,8 @@ function NoteModel() {
         {/* Note Title */}
         <div>
           <input
+            value={title}
+            onChange={(e) => setTitel(e.target.value)}
             type="text"
             className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-400 p-4 rounded-lg text-gray-700 text-xl mb-6 transition duration-200"
             placeholder="Note Title"
@@ -57,6 +80,8 @@ function NoteModel() {
         {/* Note Description */}
         <div>
           <textarea
+            value={Description}
+            onChange={(e) => setDescription(e.target.value)}
             className="w-full h-32 border border-gray-300 focus:ring-2 focus:ring-blue-400 p-4 rounded-lg text-gray-700 text-lg transition duration-200 resize-none"
             placeholder="Note Description"
           ></textarea>
@@ -64,14 +89,20 @@ function NoteModel() {
 
         {/* Add Button */}
         <div className="mt-6">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 text-xl font-semibold rounded-xl shadow-md transition duration-300">
+          <button
+            onClick={handleSubmit}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 text-xl font-semibold rounded-xl shadow-md transition duration-300"
+          >
             ➕ Add Note
           </button>
         </div>
 
         {/* Cancel Button */}
         <div className="mt-4">
-          <button className="text-red-500 hover:text-red-600 text-xl transition font-semibold">
+          <button
+            onClick={closeModel}
+            className="text-red-500 hover:text-red-600 text-xl transition font-semibold"
+          >
             Cancel
           </button>
         </div>
