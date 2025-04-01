@@ -37,27 +37,15 @@
 
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
-function NoteModel({ closeModel }) {
-  const [title, setTitel] = useState("");
-  const [Description, setDescription] = useState("");
-  const navigate = useNavigate();
+function NoteModel({ closeModel, addNote }) {
+  const [title, setTitele] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:6002/api/note/add", {
-        title,
-        Description,
-      });
-      if (response.data.success) {
-        navigate("/");
-        closeModel();
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    await addNote(title, description);
   };
   return (
     <div className=" absolute top-60 ml-[35%] w-[800px]  ">
@@ -70,7 +58,7 @@ function NoteModel({ closeModel }) {
         <div>
           <input
             value={title}
-            onChange={(e) => setTitel(e.target.value)}
+            onChange={(e) => setTitele(e.target.value)}
             type="text"
             className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-400 p-4 rounded-lg text-gray-700 text-xl mb-6 transition duration-200"
             placeholder="Note Title"
@@ -80,7 +68,7 @@ function NoteModel({ closeModel }) {
         {/* Note Description */}
         <div>
           <textarea
-            value={Description}
+            value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="w-full h-32 border border-gray-300 focus:ring-2 focus:ring-blue-400 p-4 rounded-lg text-gray-700 text-lg transition duration-200 resize-none"
             placeholder="Note Description"
