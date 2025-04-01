@@ -35,23 +35,33 @@
 
 // export default NoteModel;
 
-import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 
-function NoteModel({ closeModel, addNote }) {
+function NoteModel({ closeModel, addNote, current, edditNote }) {
   const [title, setTitele] = useState("");
   const [description, setDescription] = useState("");
 
+  useEffect(() => {
+    if (current) {
+      setTitele(current.title);
+      setDescription(current.description);
+    }
+  }, [current]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addNote(title, description);
+    if (current) {
+      edditNote(current._id, title, description);
+    } else {
+      await addNote(title, description);
+    }
   };
   return (
     <div className=" absolute top-60 ml-[35%] w-[800px]  ">
       <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-3xl h-[600px] text-black">
         <h1 className="font-bold text-3xl text-gray-800 mb-6 text-center border-b pb-4">
-          📝 Add New Note
+          {current ? "Eddit Note" : " Add New Note"}
+          📝
         </h1>
 
         {/* Note Title */}
@@ -81,7 +91,7 @@ function NoteModel({ closeModel, addNote }) {
             onClick={handleSubmit}
             className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 text-xl font-semibold rounded-xl shadow-md transition duration-300"
           >
-            ➕ Add Note
+            {current ? "Update Note" : "➕ Add Note"}
           </button>
         </div>
 
