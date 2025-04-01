@@ -40,7 +40,18 @@ const updateData = async (req, res) => {
         }
 }
 
+const DeletNote = async (req, res) => {
+        try {
+                const { id } = req.params;
+                const deleteNote = await noteModel.findByIdAndDelete(id, req.body)
+                return res.status(200).json({ success: true, deleteNote })
+        }catch (error) {
+                return res.status(500).json({success: false, message: "catn delete notes"})
+        }
+}
 
-module.exports = {RegisterNote, ReadData, updateData}
+
+
+module.exports = {RegisterNote, ReadData, updateData, DeletNote}
 
 

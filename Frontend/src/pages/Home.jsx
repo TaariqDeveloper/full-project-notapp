@@ -51,7 +51,7 @@ function Home() {
         fetchNote();
       }
     } catch (error) {
-      console.error("Error adding note:", error);
+      console.error("Error editing note:", error);
     }
   };
 
@@ -75,6 +75,26 @@ function Home() {
       }
     } catch (error) {
       console.error("Error adding note:", error);
+    }
+  };
+
+  // delete
+  const deleteNote = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:6002/api/note/delete/${id}`,
+
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (response.data.success) {
+        closeModel();
+      }
+    } catch (error) {
+      console.error("Error deleting note:", error);
     }
   };
 
@@ -103,6 +123,7 @@ function Home() {
           addNote={addNote}
           current={current}
           edditNote={edditNote}
+          deleteNote={deleteNote}
         />
       )}
     </div>
