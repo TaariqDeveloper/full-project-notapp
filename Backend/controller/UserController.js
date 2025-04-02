@@ -53,5 +53,9 @@ const CreateUserLogin = async (req, res) => {
     }
 }
 
+const UserVarify = async (req, res) => {
+        return res.status(200).json({success: true, user: req.user})
+}
+
 // Export the functions to be used in other parts of the application
-module.exports = { CreateUser , CreateUserLogin };
+module.exports = { CreateUser , CreateUserLogin , UserVarify};

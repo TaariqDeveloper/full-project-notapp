@@ -23,7 +23,7 @@ const RegisterNote = async (req, res) => {
 
 const ReadData = async (req, res) => {
         try {
-                const notes = await noteModel.find()
+                const notes = await noteModel.find({ userId: req.user.id })
                 return res.status(200).json({ success: true, notes })
         } catch (error) {
                 return res.status(500).json({success: false, message: "catn retrive notes"})
@@ -49,6 +49,8 @@ const DeletNote = async (req, res) => {
                 return res.status(500).json({success: false, message: "catn delete notes"})
         }
 }
+
+
 
 
 

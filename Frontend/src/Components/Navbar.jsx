@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "./context/ContextProvider";
 
-function Navbar() {
-  const { user } = useAuth();
+function Navbar({ setQuery }) {
+  const { user, logout } = useAuth();
 
   return (
     <div className="bg-gray-900 p-4 text-white flex justify-between items-center shadow-lg">
@@ -14,6 +14,7 @@ function Navbar() {
 
       {/* Search Input */}
       <input
+        onChange={(E) => setQuery(E.target.value)}
         type="text"
         placeholder="Search notes..."
         className="bg-gray-700 text-white px-4 py-2  rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
@@ -40,7 +41,10 @@ function Navbar() {
         ) : (
           <>
             <span className="font-semibold text-lg">{user.name}</span>
-            <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition shadow-md">
+            <button
+              onClick={logout}
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition shadow-md"
+            >
               Logout
             </button>
           </>
