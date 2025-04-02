@@ -19,7 +19,7 @@ function NoteCart({ note, onEdit, deleteNote }) {
           <FaEdit size={14} onClick={() => onEdit(note)} />
         </button>
         <button className="p-1.5 rounded-md bg-red-100 text-red-600 hover:bg-red-200 transition-all duration-200">
-          <FaTrash onClick={() => deleteNote(note._id)} size={14} />
+          <FaTrash size={14} onClick={() => deleteNote(note._id)} />
         </button>
       </div>
     </div>
